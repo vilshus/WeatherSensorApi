@@ -12,6 +12,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
+using Virtustream.WeatherSensorLib;
+using Virtustream.WeatherSensorLib.Interfaces;
+
 namespace WeatherSensorApi
 {
     public class Startup
@@ -27,6 +30,8 @@ namespace WeatherSensorApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddSingleton<ISensorManager, SensorManager>();
+            services.AddSingleton<IWeatherDataManager, WeatherDataManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

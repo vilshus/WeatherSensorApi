@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>Virtustream.WeatherSensorApi</RootNamespace>
+    <AssemblyName>Virtustream.WeatherSensorApi</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,6 +15,10 @@
 
   <ItemGroup>
     <PackageReference Include="Serilog.Extensions.Logging.File" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WeatherSensorLib\WeatherSensorLib.csproj" />
   </ItemGroup>
 
 
