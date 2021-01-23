@@ -6,7 +6,6 @@ namespace Virtustream.WeatherSensorLib.Interfaces
 {
     public interface IWeatherDataManager
     {
-        string GetWeatherData();
-        string GetWeatherData(ISensor sensor, int numberOfDays);
+        List<DayWeatherData> GetWeatherData(ISensor sensor, int numberOfDays);
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Virtustream.WeatherSensorLib;
 using Virtustream.WeatherSensorLib.Interfaces;
 
 namespace WeatherSensorApi.Controllers
@@ -14,11 +15,16 @@ namespace WeatherSensorApi.Controllers
     {
         private readonly ILogger<WeatherSensorsController> logger;
         private readonly ISensorManager sensorManager;
+        private readonly IWeatherDataManager weatherDataManager;
 
-        public WeatherSensorsController(ILogger<WeatherSensorsController> logger, ISensorManager sensorManager)
+        private string WrongIdFormatMessage(string id) => $"Given ID {id} is in wrong format. Should be a Guid.";
+        private string SensorIdNotFoundMessage(string id) => $"Sensor ID was not found: {id}.";
+
+        public WeatherSensorsController(ILogger<WeatherSensorsController> logger, ISensorManager sensorManager, IWeatherDataManager weatherDataManager)
         {
             this.logger = logger;
             this.sensorManager = sensorManager;
+            this.weatherDataManager = weatherDataManager;
         }
 
         [HttpGet]
@@ -42,18 +48,16 @@ namespace WeatherSensorApi.Controllers
 
             if (!Guid.TryParse(id, out Guid guid))
             {
-                var message = $"Given ID {id} is in wrong format. Should be a Guid.";
-                logger.LogError(message);
-                return BadRequest(message);
+                logger.LogError(WrongIdFormatMessage(id));
+                return BadRequest(WrongIdFormatMessage(id));
             }
 
             var sensor = sensorManager.GetSensor(Guid.Parse(id));
 
             if (sensor == null)
             {
-                var message = $"Sensor ID was not found: {id}";
-                logger.LogError(message);
-                return NotFound(message);
+                logger.LogError(SensorIdNotFoundMessage(id));
+                return NotFound(SensorIdNotFoundMessage(id));
             }
 
             return Ok(sensor);
@@ -85,18 +89,16 @@ namespace WeatherSensorApi.Controllers
 
             if (!Guid.TryParse(id, out Guid guid))
             {
-                var message = $"Given ID {id} is in wrong format. Should be a Guid.";
-                logger.LogError(message);
-                return BadRequest(message);
+                logger.LogError(WrongIdFormatMessage(id));
+                return BadRequest(WrongIdFormatMessage(id));
             }
 
             try
             {
                 if (!sensorManager.UpdateSensor(guid, name, city))
                 {
-                    var message = $"Sensor ID was not found: {id}";
-                    logger.LogError(message);
-                    return NotFound(message);
+                    logger.LogError(SensorIdNotFoundMessage(id));
+                    return NotFound(SensorIdNotFoundMessage(id));
                 }
 
                 logger.LogInformation($"Sensor ID = {id} has been updated.");
@@ -115,17 +117,44 @@ namespace WeatherSensorApi.Controllers
         {
             if (!Guid.TryParse(id, out Guid guid))
             {
-                var message = $"Given ID {id} is in wrong format. Should be a Guid.";
-                logger.LogError(message);
-                return BadRequest(message);
+                logger.LogError(WrongIdFormatMessage(id));
+                return BadRequest(WrongIdFormatMessage(id));
             }
 
             if (!sensorManager.DeleteSensor(guid))
             {
-                return NotFound($"Sensor ID = {id} was not found.");
+                logger.LogError(SensorIdNotFoundMessage(id));
+                return NotFound(SensorIdNotFoundMessage(id));
             }
 
             return Ok($"Sensor has been deleted. ID = {id}");
+        }
+
+        [Route("sensordata")]
+        [HttpGet]
+        public ActionResult<DayWeatherData> GetWeatherData(string id, int days)
+        {
+            logger.LogInformation($"Data requested from sensor ID = {id}");
+
+            if (!Guid.TryParse(id, out Guid guid))
+            {
+                logger.LogError(WrongIdFormatMessage(id));
+                return BadRequest(WrongIdFormatMessage(id));
+            }
+
+            var sensor = sensorManager.GetSensor(guid);
+
+            if (sensor == null)
+            {
+                logger.LogError(SensorIdNotFoundMessage(id));
+                return NotFound(SensorIdNotFoundMessage(id));
+            }
+
+            //If number of days is not provided then return for the next 2 days.
+            days = days == 0 ? 2 : days;
+            var result = weatherDataManager.GetWeatherData(sensor, days);
+
+            return Ok(result);
         }
     }
 }

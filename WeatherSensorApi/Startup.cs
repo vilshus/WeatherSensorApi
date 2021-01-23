@@ -19,6 +19,7 @@ namespace WeatherSensorApi
 {
     public class Startup
     {
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -32,6 +33,7 @@ namespace WeatherSensorApi
             services.AddControllers();
             services.AddSingleton<ISensorManager, SensorManager>();
             services.AddSingleton<IWeatherDataManager, WeatherDataManager>();
+            services.AddSingleton<IWeatherDataAccess, WeatherDataAccessMemory>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
