@@ -1,35 +1,70 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 using Virtustream.WeatherSensorLib.Interfaces;
 
 namespace Virtustream.WeatherSensorLib
 {
     public class SensorManager : ISensorManager
     {
+        #region Constants
+
+        private Guid INITIAL_SENSOR_ID = Guid.Parse("00000000-0000-0000-0000-000000000000");
+        private const string INITIAL_SENSOR_NAME = "Kaunas Sensor 1";
+        private const string INITIAL_SENSOR_CITY = "Kaunas";
+
+        #endregion
+
+        private Dictionary<Guid, ISensor> sensors = new Dictionary<Guid, ISensor>();
+
+        public SensorManager()
+        {
+            CreateInitialSensor();
+        }
+
         public ISensor CreateSensor(string name, string city)
         {
-            throw new NotImplementedException();
+            var sensor = new Sensor(Guid.NewGuid(), name, city);
+            sensors.Add(sensor.Id, sensor);
+
+            return sensor;
         }
 
         public bool DeleteSensor(Guid id)
         {
-            throw new NotImplementedException();
+            return sensors.Remove(id);
         }
 
         public ISensor GetSensor(Guid id)
         {
-            throw new NotImplementedException();
+            sensors.TryGetValue(id, out ISensor sensor);
+
+            return sensor;
         }
 
         public IEnumerable<ISensor> GetSensors()
         {
-            throw new NotImplementedException();
+            return sensors.Select(x => x.Value);
         }
 
         public bool UpdateSensor(Guid id, string newName, string newCity)
         {
-            throw new NotImplementedException();
+            if (!sensors.TryGetValue(id, out ISensor sensor))
+            {
+                return false;
+            }
+
+            sensor.ChangeName(newName);
+            sensor.ChangeCity(newCity);
+
+            return true;
+        }
+
+        private void CreateInitialSensor()
+        {
+            var sensor = new Sensor(INITIAL_SENSOR_ID, INITIAL_SENSOR_NAME, INITIAL_SENSOR_CITY);
+            sensors.Add(sensor.Id, sensor);
         }
     }
 }
