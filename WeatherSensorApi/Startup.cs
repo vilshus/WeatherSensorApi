@@ -15,7 +15,7 @@ using Microsoft.Extensions.Logging;
 using Virtustream.WeatherSensorLib;
 using Virtustream.WeatherSensorLib.Interfaces;
 
-namespace WeatherSensorApi
+namespace Virtustream.WeatherSensorApi
 {
     public class Startup
     {
