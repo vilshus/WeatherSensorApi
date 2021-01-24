@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
 using Virtustream.WeatherSensorLib.Interfaces;
 
@@ -10,13 +9,14 @@ namespace Virtustream.WeatherSensorLib
     {
         #region Constants
 
-        private Guid INITIAL_SENSOR_ID = Guid.Parse("00000000-0000-0000-0000-000000000000");
+        //Would be a good idea to externalise this into json file. At the moment this is fine though.
+        private readonly Guid INITIAL_SENSOR_ID = Guid.Parse("00000000-0000-0000-0000-000000000000");
         private const string INITIAL_SENSOR_NAME = "Kaunas Sensor 1";
         private const string INITIAL_SENSOR_CITY = "Kaunas";
 
         #endregion
 
-        private Dictionary<Guid, ISensor> sensors = new Dictionary<Guid, ISensor>();
+        private readonly Dictionary<Guid, ISensor> sensors = new Dictionary<Guid, ISensor>();
 
         public SensorManager()
         {

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
 using Virtustream.WeatherSensorLib.Interfaces;
 
 namespace Virtustream.WeatherSensorLib

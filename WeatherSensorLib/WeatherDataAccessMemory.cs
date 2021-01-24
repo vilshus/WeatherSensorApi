@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using Virtustream.WeatherSensorLib.Interfaces;
 using System.Linq;
 
@@ -11,7 +10,7 @@ namespace Virtustream.WeatherSensorLib
     /// </summary>
     public class WeatherDataAccessMemory : IWeatherDataAccess
     {
-        private Dictionary<KeyValuePair<string, DateTime>, DayWeatherData> weatherDataRepo = new Dictionary<KeyValuePair<string, DateTime>, DayWeatherData>();
+        private readonly Dictionary<KeyValuePair<string, DateTime>, DayWeatherData> weatherDataRepo = new Dictionary<KeyValuePair<string, DateTime>, DayWeatherData>();
 
         public bool TryGetWeatherData(string city, List<DateTime> days, out List<DayWeatherData> cityWeatherData)
         {

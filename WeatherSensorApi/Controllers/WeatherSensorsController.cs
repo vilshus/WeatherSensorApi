@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Virtustream.WeatherSensorLib;
@@ -13,6 +12,12 @@ namespace Virtustream.WeatherSensorApi.Controllers
     [Route("[controller]")]
     public class WeatherSensorsController : ControllerBase
     {
+        #region
+
+        private const int DEFAULT_NUMBER_FORECAST_DAYS = 2;
+
+        #endregion
+
         #region Private fields
 
         private readonly ILogger<WeatherSensorsController> logger;
@@ -34,10 +39,11 @@ namespace Virtustream.WeatherSensorApi.Controllers
         #region HTTP requests
 
         [HttpGet]
-        public ActionResult<List<ISensor>> Get()
+        public ActionResult<string> RootGet()
         {
             logger.LogInformation("Root endpoint called.");
-            return GetSensor(null);
+            var message = "Hello! User guide can be found: https://github.com/vilshus/WeatherSensorApi";
+            return Ok(message);
         }
 
         [Route("sensor")]
@@ -58,7 +64,7 @@ namespace Virtustream.WeatherSensorApi.Controllers
                 return BadRequest(WrongIdFormatMessage(id));
             }
 
-            var sensor = sensorManager.GetSensor(Guid.Parse(id));
+            var sensor = sensorManager.GetSensor(guid);
 
             if (sensor == null)
             {
@@ -125,8 +131,8 @@ namespace Virtustream.WeatherSensorApi.Controllers
                 return NotFound(SensorIdNotFoundMessage(id));
             }
 
-            //If number of days is not provided then return for the next 2 days.
-            days = days == 0 ? 2 : days;
+            //If number of days is not provided then use the default value.
+            days = days == 0 ? DEFAULT_NUMBER_FORECAST_DAYS : days;
             var result = weatherDataManager.GetWeatherData(sensor, days);
 
             logger.LogInformation($"Weather data for city {sensor.City} has been retrieved.");

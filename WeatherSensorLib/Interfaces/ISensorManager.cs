@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Virtustream.WeatherSensorLib.Interfaces
 {
@@ -12,7 +11,8 @@ namespace Virtustream.WeatherSensorLib.Interfaces
         /// <summary>
         /// Creates a sensor and stores it in the internal structure.
         /// </summary>
-        /// <param name="sensorId"></param>
+        /// <param name="name">Name of the sensor.</param>
+        /// <param name="city">City where the sensor is.</param>
         /// <returns>Created sensor.</returns>
         ISensor CreateSensor(string name, string city);
 
