@@ -1,7 +1,7 @@
 ﻿using System;
-using Virtustream.WeatherSensorLib.ExternalApi;
+using Virtustream.WeatherSensorLib.WeatherData.ExternalApi;
 
-namespace Virtustream.WeatherSensorLib
+namespace Virtustream.WeatherSensorLib.WeatherData
 {
     public class DayWeatherData
     {

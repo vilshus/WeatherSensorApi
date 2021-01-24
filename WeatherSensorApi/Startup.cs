@@ -6,8 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-using Virtustream.WeatherSensorLib;
-using Virtustream.WeatherSensorLib.Interfaces;
+using Virtustream.WeatherSensorLib.WeatherData;
+using Virtustream.WeatherSensorLib.Sensors;
 
 namespace Virtustream.WeatherSensorApi
 {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Virtustream.WeatherSensorLib.Interfaces
+namespace Virtustream.WeatherSensorLib.Sensors
 {
     /// <summary>
     /// Interface for the management persistance of sensors.

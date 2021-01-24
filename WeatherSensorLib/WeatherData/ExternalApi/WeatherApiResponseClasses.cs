@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Virtustream.WeatherSensorLib.ExternalApi
+namespace Virtustream.WeatherSensorLib.WeatherData.ExternalApi
 {
     //Automatically generated classes from https://json2csharp.com/
     //Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse); 

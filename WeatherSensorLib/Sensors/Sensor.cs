@@ -1,7 +1,6 @@
 ﻿using System;
-using Virtustream.WeatherSensorLib.Interfaces;
 
-namespace Virtustream.WeatherSensorLib
+namespace Virtustream.WeatherSensorLib.Sensors
 {
     public class Sensor : ISensor
     {

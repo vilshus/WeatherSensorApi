@@ -4,7 +4,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Virtustream.WeatherSensorApi.Controllers;
-using Virtustream.WeatherSensorLib.Interfaces;
+using Virtustream.WeatherSensorLib.WeatherData;
+using Virtustream.WeatherSensorLib.Sensors;
 
 namespace Virtustream.WeatherSensorApi.Tests
 {

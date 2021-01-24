@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Virtustream.WeatherSensorLib;
-using Virtustream.WeatherSensorLib.Interfaces;
+using Virtustream.WeatherSensorLib.Sensors;
+using Virtustream.WeatherSensorLib.WeatherData;
 
 namespace Virtustream.WeatherSensorApi.Controllers
 {
@@ -133,7 +133,7 @@ namespace Virtustream.WeatherSensorApi.Controllers
 
             //If number of days is not provided then use the default value.
             days = days == 0 ? DEFAULT_NUMBER_FORECAST_DAYS : days;
-            var result = weatherDataManager.GetWeatherData(sensor, days);
+            var result = weatherDataManager.GetWeatherForecastData(sensor, days);
 
             logger.LogInformation($"Weather data for city {sensor.City} has been retrieved.");
             return Ok(result);

@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Virtustream.WeatherSensorLib.Interfaces;
 using System.Linq;
 
-namespace Virtustream.WeatherSensorLib
+namespace Virtustream.WeatherSensorLib.WeatherData
 {
     /// <summary>
     /// Provides weather data storage and access in memory.

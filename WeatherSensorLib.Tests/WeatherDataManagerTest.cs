@@ -2,7 +2,9 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using Moq;
-using Virtustream.WeatherSensorLib.Interfaces;
+using Virtustream.WeatherSensorLib.WeatherData;
+using Virtustream.WeatherSensorLib.WeatherData.ExternalApi;
+using Virtustream.WeatherSensorLib.Sensors;
 
 namespace Virtustream.WeatherSensorLib.Tests
 {
@@ -19,7 +21,7 @@ namespace Virtustream.WeatherSensorLib.Tests
         public void GetWeatherData_DataIsFound_ReturnsData()
         {
             //Arrange
-            var dayWeatherDatas = new List<DayWeatherData> { new DayWeatherData("Kaunas", DateTime.Now, new ExternalApi.Forecastday()) };
+            var dayWeatherDatas = new List<DayWeatherData> { new DayWeatherData("Kaunas", DateTime.Now, new Forecastday()) };
             var days = new List<DateTime> { DateTime.Today.AddDays(1) };
             var city = "Kaunas";
 
@@ -32,7 +34,7 @@ namespace Virtustream.WeatherSensorLib.Tests
             var weatherDataManager = new WeatherDataManager(weatherDataRepoMock.Object);
 
             //Act
-            var result = weatherDataManager.GetWeatherData(sensorMock.Object, 1);
+            var result = weatherDataManager.GetWeatherForecastData(sensorMock.Object, 1);
 
             //Assert
             Assert.AreEqual(1, result.Count);

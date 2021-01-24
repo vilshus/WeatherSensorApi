@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Virtustream.WeatherSensorLib.Interfaces;
 
-namespace Virtustream.WeatherSensorLib
+namespace Virtustream.WeatherSensorLib.Sensors
 {
     public class SensorManager : ISensorManager
     {

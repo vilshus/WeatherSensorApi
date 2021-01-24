@@ -5,11 +5,11 @@ using System.IO;
 using System.Text.Json;
 using System.Linq;
 
-using Virtustream.WeatherSensorLib.Interfaces;
-using Virtustream.WeatherSensorLib.ExternalApi;
+using Virtustream.WeatherSensorLib.WeatherData.ExternalApi;
+using Virtustream.WeatherSensorLib.Sensors;
 using Virtustream.WeatherSensorLib.Configs;
 
-namespace Virtustream.WeatherSensorLib
+namespace Virtustream.WeatherSensorLib.WeatherData
 {
     public class WeatherDataManager : IWeatherDataManager
     {
@@ -22,7 +22,7 @@ namespace Virtustream.WeatherSensorLib
             config = new WeatherDataManagerConfig();    //Dependency inject would be better, but at the moment this is fine enough.
         }
 
-        public List<DayWeatherData> GetWeatherData(ISensor sensor, int numberOfDays)
+        public List<DayWeatherData> GetWeatherForecastData(ISensor sensor, int numberOfDays)
         {
             var days = new List<DateTime>();
             var currentDay = DateTime.Today;
