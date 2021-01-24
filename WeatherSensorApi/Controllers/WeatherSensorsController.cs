@@ -13,6 +13,8 @@ namespace Virtustream.WeatherSensorApi.Controllers
     [Route("[controller]")]
     public class WeatherSensorsController : ControllerBase
     {
+        #region Private fields
+
         private readonly ILogger<WeatherSensorsController> logger;
         private readonly ISensorManager sensorManager;
         private readonly IWeatherDataManager weatherDataManager;
@@ -20,12 +22,16 @@ namespace Virtustream.WeatherSensorApi.Controllers
         private string WrongIdFormatMessage(string id) => $"Given ID {id} is in wrong format. Should be a Guid.";
         private string SensorIdNotFoundMessage(string id) => $"Sensor ID was not found: {id}.";
 
+        #endregion
+
         public WeatherSensorsController(ILogger<WeatherSensorsController> logger, ISensorManager sensorManager, IWeatherDataManager weatherDataManager)
         {
             this.logger = logger;
             this.sensorManager = sensorManager;
             this.weatherDataManager = weatherDataManager;
         }
+
+        #region HTTP requests
 
         [HttpGet]
         public ActionResult<List<ISensor>> Get()
@@ -126,6 +132,8 @@ namespace Virtustream.WeatherSensorApi.Controllers
             logger.LogInformation($"Weather data for city {sensor.City} has been retrieved.");
             return Ok(result);
         }
+
+        #endregion
 
         #region Private methods
 
